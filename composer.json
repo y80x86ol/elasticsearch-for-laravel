@@ -1,6 +1,6 @@
 {
   "name": "y80x86ol/elasticsearch",
-  "description": "elasticsearch for laravel5",
+  "description": "use elasticsearch dsl query for laravel5",
   "keywords": [
     "elasticsearch",
     "laravel"
