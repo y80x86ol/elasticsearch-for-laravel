@@ -23,7 +23,7 @@ Laravel
 
 使用composer进行安装
 
-    composer install y80x86ol\elasticsearch:^1.0
+    composer install y80x86ol\elasticsearch
     
 在config/app.php中的providers添加
     
