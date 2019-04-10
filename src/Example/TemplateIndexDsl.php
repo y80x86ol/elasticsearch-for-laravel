@@ -3,7 +3,9 @@
 namespace Ken\Elasticsearch\Example;
 
 
-class TemplateIndexDsl
+use Ken\Elasticsearch\Query;
+
+class TemplateIndexDsl extends Query
 {
     public function query()
     {

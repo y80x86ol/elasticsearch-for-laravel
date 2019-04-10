@@ -160,9 +160,9 @@ Laravel
         
 导入指定数据
 
-        $result = (new ExampleModel())->indexOne(1);
+        $result = (new ExampleModel())->index(1);
         或
-        $result = ExampleModel::indexOne(1);
+        $result = ExampleModel::index(1);
 
 
 ### 文档操作
