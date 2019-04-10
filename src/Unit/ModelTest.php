@@ -90,12 +90,12 @@ class ModelTest extends TestCase
     private function initStudentTable()
     {
         try {
-            Schema::drop('student');
+            Schema::drop('unit_example_student');
         } catch (\Exception $exception) {
 
         }
 
-        Schema::create('student', function (Blueprint $table) {
+        Schema::create('unit_example_student', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 32);
             $table->string('desc', 255);

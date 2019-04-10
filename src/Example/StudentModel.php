@@ -13,5 +13,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class StudentModel extends Model
 {
-    protected $table = 'student';
+    protected $table = 'unit_example_student';
 }
