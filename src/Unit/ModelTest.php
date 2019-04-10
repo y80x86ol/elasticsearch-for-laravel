@@ -9,6 +9,13 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Ken\Elasticsearch\Example\{GetDocDsl, MgetDsl, SearchDsl, DeleteDsl, UpdateDsl, IndexDsl, BulkDsl};
 
+/**
+ * 模型单元测试
+ *
+ * 测试基本功能访问是否正常
+ *
+ * @package Ken\Elasticsearch\Unit
+ */
 class ModelTest extends TestCase
 {
     /**

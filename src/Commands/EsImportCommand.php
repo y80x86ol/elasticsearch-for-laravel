@@ -88,6 +88,7 @@ class EsImportCommand extends Command
             $this->info('import fail：：' . $result['message']);
         } else {
             $this->info('total num：' . $result['total']);
+            $this->info('success num：' . $result['success']);
             $this->info('max id num：' . $result['max_id']);
         }
         $this->info('time consum：' . $totalTime);

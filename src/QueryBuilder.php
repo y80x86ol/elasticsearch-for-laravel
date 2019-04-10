@@ -313,8 +313,11 @@ class QueryBuilder
             $maxId = $lastModel->id;
         }
 
+        $success = 0;
+
         $result = [
             'total' => $count,
+            'success' => $success,
             'max_id' => $maxId,
             'error' => false,
             'message' => 'import success'
@@ -328,10 +331,18 @@ class QueryBuilder
                 $params = $this->params->getImportParams();
                 $params['body'] = $this->model->toSearchableArray();
 
+                if (!$params['body']) {
+                    continue;
+                }
+
                 $params['id'] = $params['body']['id'];
 
                 $this->engine->elastic->index($params);
+
+                $success++;
             }
+
+            $result['success'] = $success;
         } catch (\Exception $exception) {
             $result['error'] = true;
             $result['message'] = $exception->getMessage();
@@ -350,6 +361,7 @@ class QueryBuilder
     {
         $result = [
             'total' => 1,
+            'success' => 0,
             'max_id' => $id,
             'error' => false,
             'message' => 'index fail'
@@ -371,9 +383,17 @@ class QueryBuilder
             $params = $this->params->getImportParams();
             $params['body'] = $this->model->toSearchableArray();
 
+            if (!$params['body']) {
+                $result['error'] = true;
+                $result['message'] = 'there is no data for model';
+                return $result;
+            }
+
             $params['id'] = $params['body']['id'];
 
             $this->engine->elastic->index($params);
+
+            $result['success'] = 1;
         } catch (\Exception $exception) {
             $result['error'] = true;
             $result['message'] = $exception->getMessage();
