@@ -82,7 +82,7 @@ class EsImportCommand extends Command
 
         $endTime = microtime(true);
 
-        $totalTime = ($endTime - $startTime) . 'second';
+        $totalTime = ($endTime - $startTime) . ' second';
 
         if ($result['error']) {
             $this->info('import fail：：' . $result['message']);
