@@ -67,6 +67,11 @@ class ElasticsearchServiceProvider extends ServiceProvider
                 $elasticClient = $elasticClient->setRetries(config('elasticsearch.retries'));
             }
 
+            /**
+             * 注入命令
+             */
+            $this->commands([\Ken\Elasticsearch\Commands\EsInitCommand::class, \Ken\Elasticsearch\Commands\EsImportCommand::class]);
+
             $elasticClient = $elasticClient->build();
 
             return new ElasticsearchEngine($elasticClient);
