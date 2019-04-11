@@ -29,6 +29,11 @@ class ElasticsearchServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/config/elasticsearch.php' => config_path('elasticsearch.php'), // 发布配置文件到 laravel 的config 下
         ]);
+
+        /**
+         * 注入命令
+         */
+        $this->commands(['Ken\Elasticsearch\Commands\EsInitCommand', 'Ken\Elasticsearch\Commands\EsImportCommand']);
     }
 
     /**
@@ -66,11 +71,6 @@ class ElasticsearchServiceProvider extends ServiceProvider
             if (config('elasticsearch.retries')) {
                 $elasticClient = $elasticClient->setRetries(config('elasticsearch.retries'));
             }
-
-            /**
-             * 注入命令
-             */
-            $this->commands([\Ken\Elasticsearch\Commands\EsInitCommand::class, \Ken\Elasticsearch\Commands\EsImportCommand::class]);
 
             $elasticClient = $elasticClient->build();
 
