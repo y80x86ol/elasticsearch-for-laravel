@@ -29,12 +29,6 @@ Laravel
     
     Ken\Elasticsearch\ElasticsearchserviceProvider::class,
     
-在Console/Kernel中添加
-
-    \Ken\Elasticsearch\Commands\EsInitCommand::class
-    
-    \Ken\Elasticsearch\Commands\EsImportCommand::class
-    
 发布配置文件
 
     php artisan vendor:publish --provider="Ken\Elasticsearch\ElasticsearchServiceProvider"
