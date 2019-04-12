@@ -98,4 +98,54 @@ class SearchResult extends ResultHandler
 
         return $this->output->toArray();
     }
+
+    /**
+     * 获取分页数据
+     *
+     * @return array
+     */
+    public function paginate(int $page, int $size): array
+    {
+        $searchResult = $this->getSource();
+
+        $newList = [];
+        $list = $searchResult['hits']['hits'] ?? [];
+
+        foreach ($list as $item) {
+            $newList[] = $item['_source'] ?? [];
+        }
+
+        $hitsTotal = $searchResult['hits']['total'] ?? 0;
+
+        $data = [
+            "page" => $this->getPageInfo($page, $size, $hitsTotal),
+            "list" => $newList
+        ];
+
+        $this->output->setData($data);
+
+        return $this->output->toArray();
+    }
+
+    /**
+     * 获取分页信息
+     *
+     * @param int $page 当前页面
+     * @param int $size 每页多少条
+     * @param int $hitsTotal 命中总数据
+     * @return array
+     */
+    private function getPageInfo(int $page, int $size, int $hitsTotal): array
+    {
+        $totalPage = (int)ceil($hitsTotal / $size);//获取总页码
+        $pageInfo = [
+            'current_page' => $page, //当前多少页
+            'last_page' => ($totalPage > $page) ? $page + 1 : $page, //下一页
+            'per_page' => $size, // 一页展示条
+            'total' => $hitsTotal, // 页码总数
+            'total_page' => $totalPage, // 总共多少页
+        ];
+
+        return $pageInfo;
+    }
 }
