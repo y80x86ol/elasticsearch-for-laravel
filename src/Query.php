@@ -12,21 +12,18 @@ namespace Ken\Elasticsearch;
 abstract class Query
 {
     /**
-     * 查询参数
+     * 过滤
      *
      * @var array
      */
-    protected $params = [];
+    protected $filter = [];
 
     /**
-     * 设置参数
+     * 排序
      *
-     * @param array $params
+     * @var array
      */
-    public function setParams(array $params = []): void
-    {
-        $this->params = $params;
-    }
+    protected $sort = [];
 
     /**
      * 外部执行调用方法
@@ -36,6 +33,63 @@ abstract class Query
     public function apply(): array
     {
         return $this->query();
+    }
+
+    /**
+     * 条件
+     *
+     * @param string $field 条件字段
+     * @param string $value 条件值
+     * @return $this
+     */
+    public function where($field, $value)
+    {
+        $this->filter[] = [
+            "term" => [
+                $field => $value
+            ]
+        ];
+
+        return $this;
+    }
+
+    /**
+     * 范围
+     *
+     * @param string $field 条件字段
+     * @param string $flag 操作
+     * @param string $value 条件值
+     * @return $this
+     */
+    public function range($field, $flag, $value)
+    {
+        $this->filter[] = [
+            "range" => [
+                $field => [
+                    $flag => $value
+                ]
+            ]
+        ];
+
+        return $this;
+    }
+
+    /**
+     * 排序
+     *
+     * @param string $column 排序的字段
+     * @param string $direction
+     * @return $this
+     */
+    public function orderBy($column, $direction = 'asc')
+    {
+        $this->sort[] = [
+            $column => [
+                "order" => $direction
+            ]
+        ];
+
+        return $this;
     }
 
     /**
