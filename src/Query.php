@@ -39,16 +39,24 @@ abstract class Query
      * 条件
      *
      * @param string $field 条件字段
-     * @param string $value 条件值
+     * @param string|array $value 条件值
      * @return $this
      */
-    public function where($field, $value)
+    public function where(string $field, $value)
     {
-        $this->filter[] = [
-            "term" => [
-                $field => $value
-            ]
-        ];
+        if (is_array($value)) {
+            $this->filter[] = [
+                "terms" => [
+                    $field => $value
+                ]
+            ];
+        } else {
+            $this->filter[] = [
+                "term" => [
+                    $field => $value
+                ]
+            ];
+        }
 
         return $this;
     }
@@ -61,7 +69,7 @@ abstract class Query
      * @param string $value 条件值
      * @return $this
      */
-    public function range($field, $flag, $value)
+    public function range(string $field, string $flag, $value)
     {
         $this->filter[] = [
             "range" => [
@@ -78,10 +86,10 @@ abstract class Query
      * 排序
      *
      * @param string $column 排序的字段
-     * @param string $direction
+     * @param string $direction 排序规则
      * @return $this
      */
-    public function orderBy($column, $direction = 'asc')
+    public function orderBy(string $column, string $direction = 'asc')
     {
         $this->sort[] = [
             $column => [
