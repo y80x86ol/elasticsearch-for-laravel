@@ -5,12 +5,17 @@ namespace Ken\Elasticsearch;
 /**
  * Elasticsearch Query
  *
- * 使用 Query DSL方式
+ * 使用 Query DSL方式，这里简单的封装了查询构造器，只能满足基础的使用，下一个版本将会加强这一块的功能
  *
  * @package Ken\Elasticsearch
  */
 abstract class Query
 {
+    /**
+     * 每页查询多少
+     */
+    const QUERY_SIZE = 10;
+
     /**
      * 过滤
      *
@@ -26,6 +31,20 @@ abstract class Query
     protected $sort = [];
 
     /**
+     * 分页
+     *
+     * @var int
+     */
+    protected $page = 0;
+
+    /**
+     * 排序
+     *
+     * @var int
+     */
+    protected $size = 10;
+
+    /**
      * 外部执行调用方法
      *
      * @return mixed
@@ -33,6 +52,26 @@ abstract class Query
     public function apply(): array
     {
         return $this->query();
+    }
+
+    /**
+     * 分页
+     *
+     * @param int $page 当前页码
+     * @param int $size 每页展示多少条
+     * @return $this
+     */
+    public function paginate(int $page, int $size = self::QUERY_SIZE)
+    {
+        $this->size = $size;
+
+        if ($page == 0 || $page == 1) {
+            $this->from = 0;
+        } else {
+            $this->from = ($page - 1) * $this->size;
+        }
+
+        return $this;
     }
 
     /**
