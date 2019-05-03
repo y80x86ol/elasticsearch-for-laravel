@@ -104,9 +104,9 @@ class EsInitCommand extends Command
         try {
             $templateParams = (new $templateName())->query();
             $this->elasticEngine->elastic->indices()->putTemplate($templateParams);
+            $this->info("success");
         } catch (\Exception $exception) {
-            $this->error("create template fail：" . $exception->getMessage());
-            die;
+            $this->error("fail：" . $exception->getMessage());
         }
 
         $endTime = microtime(true);
@@ -114,6 +114,7 @@ class EsInitCommand extends Command
         $totalTime = ($endTime - $startTime) . 'second';
 
         $this->info('time consum：' . $totalTime);
+        $this->info("");
     }
 
     /**
@@ -128,14 +129,18 @@ class EsInitCommand extends Command
 
         $startTime = microtime(true);
 
-        try {
-            $indexParamsList = (new $indexTemplateName())->query();
-            foreach ($indexParamsList as $indexParams) {
+        $indexParamsList = (new $indexTemplateName())->query();
+        foreach ($indexParamsList as $indexParams) {
+            $this->info($indexParams['index']);
+
+            try {
                 $this->elasticEngine->elastic->indices()->create($indexParams);
+                $this->info('success');
+            } catch (\Exception $exception) {
+                $this->error("fail");
+                $this->error($exception->getMessage());
             }
-        } catch (\Exception $exception) {
-            $this->error("create index fail：" . $exception->getMessage());
-            die;
+            $this->info("");
         }
 
         $endTime = microtime(true);
