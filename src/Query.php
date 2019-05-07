@@ -38,7 +38,14 @@ abstract class Query
     protected $page = 0;
 
     /**
-     * 排序
+     * 从哪条开始查询
+     *
+     * @var int
+     */
+    protected $from = 10;
+
+    /**
+     * 每页展示多少条
      *
      * @var int
      */

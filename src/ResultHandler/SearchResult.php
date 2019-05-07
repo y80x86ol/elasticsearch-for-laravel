@@ -141,8 +141,8 @@ class SearchResult extends ResultHandler
         $pageInfo = [
             'current_page' => $page, //当前多少页
             'last_page' => ($totalPage > $page) ? $page + 1 : $page, //下一页
-            'per_page' => $size, // 一页展示条
-            'total' => $hitsTotal, // 页码总数
+            'per_page' => $size, // 一页展示多少条
+            'total' => $hitsTotal, // 总共有多少条
             'total_page' => $totalPage, // 总共多少页
         ];
 
