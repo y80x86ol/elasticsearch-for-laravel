@@ -81,15 +81,14 @@ abstract class Model
      * 设置查询语句
      *
      * @param string $queryClass
-     * @param array $queryParams
+     * @param mixed $queryParams
      * @return QueryBuilder
      */
-    public static function query(string $queryClass = '', array $queryParams = []): QueryBuilder
+    public static function query(string $queryClass = '', ...$queryParams): QueryBuilder
     {
         $query = new static();
         if ($queryClass) {
-            $queryDsl = new $queryClass;
-            $queryDsl->setParams($queryParams);
+            $queryDsl = new $queryClass(...$queryParams);
             $queryJson = $queryDsl->apply();
 
             $query->queryJson = $queryJson;
